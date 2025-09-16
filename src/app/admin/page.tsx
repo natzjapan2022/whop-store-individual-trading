@@ -217,7 +217,7 @@ export default function AdminPage() {
 
       // Remove column data from all users
       const updatedUsers = users.map(user => {
-        const { [columnKey]: _, ...rest } = user
+        const { [columnKey]: _removed, ...rest } = user
         return rest
       })
       saveUsers(updatedUsers)
