@@ -1,15 +1,43 @@
 "use client"
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useRouter, usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, LogOut } from 'lucide-react'
 import Image from 'next/image'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const router = useRouter()
+  const pathname = usePathname()
+
+  useEffect(() => {
+    // Check if user is authenticated
+    const session = localStorage.getItem('userSession')
+    if (session) {
+      const sessionData = JSON.parse(session)
+      const now = Date.now()
+      if (sessionData.expiresAt > now) {
+        setIsAuthenticated(true)
+      } else {
+        localStorage.removeItem('userSession')
+        setIsAuthenticated(false)
+      }
+    }
+  }, [pathname])
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
+
+  const handleLogout = () => {
+    localStorage.removeItem('userSession')
+    setIsAuthenticated(false)
+    router.push('/')
+  }
+
+  // Hide navigation on dashboard page
+  const isDashboard = pathname === '/dashboard'
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -27,40 +55,51 @@ export default function Header() {
             <span className="text-xl font-bold">Individual Trading</span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <Link href="#features" className="text-sm font-medium hover:text-primary transition-colors">
-              Features
-            </Link>
-            <Link href="#education" className="text-sm font-medium hover:text-primary transition-colors">
-              Education
-            </Link>
-            <Link href="#tools" className="text-sm font-medium hover:text-primary transition-colors">
-              Tools
-            </Link>
-            <Link href="#about" className="text-sm font-medium hover:text-primary transition-colors">
-              About
-            </Link>
-            <Link href="/pricing" className="text-sm font-medium hover:text-primary transition-colors">
-              Pricing
-            </Link>
-            <Link href="#contact" className="text-sm font-medium hover:text-primary transition-colors">
-              Contact
-            </Link>
-          </nav>
+          {/* Desktop Navigation - Hide on dashboard */}
+          {!isDashboard && (
+            <nav className="hidden md:flex items-center space-x-8">
+              <Link href="#features" className="text-sm font-medium hover:text-primary transition-colors">
+                Features
+              </Link>
+              <Link href="#education" className="text-sm font-medium hover:text-primary transition-colors">
+                Education
+              </Link>
+              <Link href="#tools" className="text-sm font-medium hover:text-primary transition-colors">
+                Tools
+              </Link>
+              <Link href="#about" className="text-sm font-medium hover:text-primary transition-colors">
+                About
+              </Link>
+              <Link href="/pricing" className="text-sm font-medium hover:text-primary transition-colors">
+                Pricing
+              </Link>
+              <Link href="#contact" className="text-sm font-medium hover:text-primary transition-colors">
+                Contact
+              </Link>
+            </nav>
+          )}
 
           {/* Desktop Auth Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            <Link href="/login">
-              <Button variant="ghost" size="sm">
-                Sign In
+            {isDashboard && isAuthenticated ? (
+              <Button onClick={handleLogout} variant="ghost" size="sm">
+                <LogOut className="h-4 w-4 mr-2" />
+                Sign Out
               </Button>
-            </Link>
-            <Link href="/pricing">
-              <Button size="sm">
-                Get Started
-              </Button>
-            </Link>
+            ) : (
+              <>
+                <Link href="/login">
+                  <Button variant="ghost" size="sm">
+                    Sign In
+                  </Button>
+                </Link>
+                <Link href="/pricing">
+                  <Button size="sm">
+                    Get Started
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -74,7 +113,7 @@ export default function Header() {
         </div>
 
         {/* Mobile Menu */}
-        {isMenuOpen && (
+        {isMenuOpen && !isDashboard && (
           <div className="md:hidden py-4 border-t">
             <nav className="flex flex-col space-y-4">
               <Link
@@ -132,6 +171,18 @@ export default function Header() {
                 </Link>
               </div>
             </nav>
+          </div>
+        )}
+
+        {/* Mobile Menu for Dashboard */}
+        {isMenuOpen && isDashboard && isAuthenticated && (
+          <div className="md:hidden py-4 border-t">
+            <div className="flex justify-center">
+              <Button onClick={handleLogout} variant="ghost" size="sm" className="w-full">
+                <LogOut className="h-4 w-4 mr-2" />
+                Sign Out
+              </Button>
+            </div>
           </div>
         )}
       </div>
