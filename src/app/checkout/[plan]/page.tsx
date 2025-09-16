@@ -5,7 +5,8 @@ import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { TrendingUp, ArrowLeft, Crown, Zap } from 'lucide-react'
+import { ArrowLeft, Crown, Zap } from 'lucide-react'
+import Image from 'next/image'
 
 export default function CheckoutPage() {
   const params = useParams()
@@ -93,9 +94,13 @@ export default function CheckoutPage() {
         {/* Header */}
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center space-x-2 mb-6">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-r from-blue-600 to-blue-800">
-              <TrendingUp className="h-6 w-6 text-white" />
-            </div>
+            <Image
+              src="/logo.png"
+              alt="Individual Trading Logo"
+              width={40}
+              height={40}
+              className="h-10 w-10 object-contain"
+            />
             <span className="text-2xl font-bold text-gray-900">Individual Trading</span>
           </Link>
 
@@ -108,6 +113,17 @@ export default function CheckoutPage() {
 
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Complete Your Purchase</h1>
           <p className="text-gray-600">You&apos;re about to join thousands of successful traders</p>
+
+          {/* Banner */}
+          <div className="mt-6 mb-8">
+            <Image
+              src="/banner.png"
+              alt="Individual Trading Banner"
+              width={800}
+              height={200}
+              className="w-full max-w-2xl mx-auto rounded-lg shadow-lg object-cover"
+            />
+          </div>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">

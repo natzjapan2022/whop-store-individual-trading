@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import {
-  TrendingUp,
   Check,
   X,
   Crown,
@@ -14,6 +13,7 @@ import {
   BookOpen,
   BarChart3
 } from 'lucide-react'
+import Image from 'next/image'
 
 export default function PricingPage() {
 
@@ -29,9 +29,13 @@ export default function PricingPage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <Link href="/" className="flex items-center space-x-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-r from-blue-600 to-blue-800">
-                <TrendingUp className="h-5 w-5 text-white" />
-              </div>
+              <Image
+                src="/logo.png"
+                alt="Individual Trading Logo"
+                width={32}
+                height={32}
+                className="h-8 w-8 object-contain"
+              />
               <span className="text-xl font-bold">Individual Trading</span>
             </Link>
             <div className="flex items-center space-x-4">
@@ -51,6 +55,17 @@ export default function PricingPage() {
       </header>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        {/* Banner Section */}
+        <div className="text-center mb-12">
+          <Image
+            src="/banner.png"
+            alt="Individual Trading Banner"
+            width={800}
+            height={300}
+            className="w-full max-w-4xl mx-auto rounded-xl shadow-2xl object-cover"
+          />
+        </div>
+
         {/* Header Section */}
         <div className="text-center mb-16">
           <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">

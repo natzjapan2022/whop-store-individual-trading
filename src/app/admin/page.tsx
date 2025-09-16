@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import {
-  TrendingUp,
   Users,
   Plus,
   Search,
@@ -19,6 +18,7 @@ import {
   LogOut,
   Columns
 } from 'lucide-react'
+import Image from 'next/image'
 
 interface Column {
   key: string
@@ -268,9 +268,13 @@ export default function AdminPage() {
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center space-x-4">
               <Link href="/" className="flex items-center space-x-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-r from-blue-600 to-blue-800">
-                  <TrendingUp className="h-5 w-5 text-white" />
-                </div>
+                <Image
+                  src="/logo.png"
+                  alt="Individual Trading Logo"
+                  width={32}
+                  height={32}
+                  className="h-8 w-8 object-contain"
+                />
                 <span className="text-xl font-bold">Individual Trading Admin</span>
               </Link>
             </div>

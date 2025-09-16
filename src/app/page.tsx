@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
-  TrendingUp,
   BarChart3,
   Shield,
   BookOpen,
@@ -26,6 +25,7 @@ import {
   MapPin,
   CheckCircle,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
@@ -116,11 +116,22 @@ export default function Home() {
             </div>
 
             <div className="relative">
+              {/* Banner Image */}
+              <div className="mb-8">
+                <Image
+                  src="/banner.png"
+                  alt="Individual Trading Banner"
+                  width={600}
+                  height={300}
+                  className="w-full rounded-2xl shadow-2xl object-cover"
+                />
+              </div>
+
               <div className="bg-white rounded-2xl shadow-2xl p-8 border">
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="text-lg font-semibold">Trading Dashboard</h3>
                   <div className="flex items-center space-x-2 text-green-600">
-                    <TrendingUp className="h-4 w-4" />
+                    <BarChart3 className="h-4 w-4" />
                     <span className="text-sm font-medium">+12.5%</span>
                   </div>
                 </div>
@@ -514,9 +525,13 @@ export default function Home() {
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center space-x-2 mb-4">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-                  <TrendingUp className="h-5 w-5 text-white" />
-                </div>
+                <Image
+                  src="/logo.png"
+                  alt="Individual Trading Logo"
+                  width={32}
+                  height={32}
+                  className="h-8 w-8 object-contain"
+                />
                 <span className="text-xl font-bold">Individual Trading</span>
               </div>
               <p className="text-gray-400 text-sm">

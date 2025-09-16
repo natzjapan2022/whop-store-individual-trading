@@ -5,7 +5,8 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
-import { TrendingUp, Eye, EyeOff, Mail, Lock } from 'lucide-react'
+import { Eye, EyeOff, Mail, Lock } from 'lucide-react'
+import Image from 'next/image'
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
@@ -35,9 +36,13 @@ export default function LoginPage() {
         {/* Logo */}
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center space-x-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-r from-blue-600 to-blue-800">
-              <TrendingUp className="h-6 w-6 text-white" />
-            </div>
+            <Image
+              src="/logo.png"
+              alt="Individual Trading Logo"
+              width={40}
+              height={40}
+              className="h-10 w-10 object-contain"
+            />
             <span className="text-2xl font-bold text-gray-900">Individual Trading</span>
           </Link>
         </div>
