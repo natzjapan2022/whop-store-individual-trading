@@ -23,7 +23,7 @@ import {
 interface Column {
   key: string
   label: string
-  type: 'text' | 'email' | 'date' | 'select'
+  type: 'text' | 'email' | 'date' | 'select' | 'textarea'
   options?: string[]
   required: boolean
 }
@@ -34,7 +34,7 @@ interface User {
 }
 
 // Default columns structure
-const defaultColumns = [
+const defaultColumns: Column[] = [
   { key: 'name', label: 'Name', type: 'text', required: true },
   { key: 'email', label: 'Email', type: 'email', required: true },
   { key: 'datePurchased', label: 'Date Purchased', type: 'date', required: true },
@@ -161,12 +161,12 @@ export default function AdminPage() {
     if (editingUser) {
       // Update existing user
       const updatedUsers = users.map(user =>
-        user.id === editingUser.id ? formData : user
+        user.id === editingUser.id ? { ...formData, id: editingUser.id } as User : user
       )
       saveUsers(updatedUsers)
     } else {
       // Add new user
-      const newUser = { ...formData, id: Date.now() }
+      const newUser = { ...formData, id: Date.now().toString() } as User
       saveUsers([...users, newUser])
     }
 
@@ -182,10 +182,10 @@ export default function AdminPage() {
       return
     }
 
-    const columnData = {
+    const columnData: Column = {
       key: newColumn.key,
       label: newColumn.label,
-      type: newColumn.type,
+      type: newColumn.type as 'text' | 'email' | 'date' | 'select' | 'textarea',
       required: newColumn.required,
       ...(newColumn.type === 'select' && { options: newColumn.options.split(',').map(opt => opt.trim()) })
     }
@@ -219,7 +219,7 @@ export default function AdminPage() {
       const updatedUsers = users.map(user => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { [columnKey]: _removed, ...rest } = user
-        return rest
+        return rest as User
       })
       saveUsers(updatedUsers)
     }
@@ -464,7 +464,7 @@ export default function AdminPage() {
                     {column.type === 'select' ? (
                       <select
                         name={column.key}
-                        value={formData[column.key] || ''}
+                        value={String(formData[column.key] || '')}
                         onChange={handleInputChange}
                         required={column.required}
                         className="flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
@@ -477,7 +477,7 @@ export default function AdminPage() {
                     ) : column.type === 'textarea' ? (
                       <textarea
                         name={column.key}
-                        value={formData[column.key] || ''}
+                        value={String(formData[column.key] || '')}
                         onChange={handleInputChange}
                         required={column.required}
                         className="flex min-h-[80px] w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
@@ -487,7 +487,7 @@ export default function AdminPage() {
                       <Input
                         name={column.key}
                         type={column.type}
-                        value={formData[column.key] || ''}
+                        value={String(formData[column.key] || '')}
                         onChange={handleInputChange}
                         required={column.required}
                         placeholder={`Enter ${column.label.toLowerCase()}`}
