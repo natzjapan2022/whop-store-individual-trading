@@ -14,13 +14,24 @@ import {
   Edit,
   Trash2,
   Home,
-  DollarSign,
   Activity,
   X,
   LogOut,
-  Settings,
   Columns
 } from 'lucide-react'
+
+interface Column {
+  key: string
+  label: string
+  type: 'text' | 'email' | 'date' | 'select'
+  options?: string[]
+  required: boolean
+}
+
+interface User {
+  id: string
+  [key: string]: string | boolean | number
+}
 
 // Default columns structure
 const defaultColumns = [
@@ -31,13 +42,13 @@ const defaultColumns = [
 ]
 
 export default function AdminPage() {
-  const [users, setUsers] = useState<any[]>([])
+  const [users, setUsers] = useState<User[]>([])
   const [columns, setColumns] = useState(defaultColumns)
   const [searchTerm, setSearchTerm] = useState('')
   const [showUserModal, setShowUserModal] = useState(false)
   const [showColumnModal, setShowColumnModal] = useState(false)
-  const [editingUser, setEditingUser] = useState<any>(null)
-  const [formData, setFormData] = useState<any>({})
+  const [editingUser, setEditingUser] = useState<User | null>(null)
+  const [formData, setFormData] = useState<Record<string, string>>({})
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
@@ -96,12 +107,12 @@ export default function AdminPage() {
   }
 
   // Save data to localStorage
-  const saveUsers = (updatedUsers: any[]) => {
+  const saveUsers = (updatedUsers: User[]) => {
     localStorage.setItem('admin_users', JSON.stringify(updatedUsers))
     setUsers(updatedUsers)
   }
 
-  const saveColumns = (updatedColumns: any[]) => {
+  const saveColumns = (updatedColumns: Column[]) => {
     localStorage.setItem('admin_columns', JSON.stringify(updatedColumns))
     setColumns(updatedColumns)
   }
@@ -123,7 +134,7 @@ export default function AdminPage() {
   // Handle add/edit user
   const handleAddUser = () => {
     setEditingUser(null)
-    const emptyFormData: any = { id: Date.now() }
+    const emptyFormData: Record<string, string> = { id: Date.now().toString() }
     columns.forEach(col => {
       emptyFormData[col.key] = ''
     })
@@ -131,7 +142,7 @@ export default function AdminPage() {
     setShowUserModal(true)
   }
 
-  const handleEditUser = (user: any) => {
+  const handleEditUser = (user: User) => {
     setEditingUser(user)
     setFormData({ ...user })
     setShowUserModal(true)
@@ -206,7 +217,7 @@ export default function AdminPage() {
 
       // Remove column data from all users
       const updatedUsers = users.map(user => {
-        const { [columnKey]: removed, ...rest } = user
+        const { [columnKey]: _, ...rest } = user
         return rest
       })
       saveUsers(updatedUsers)
@@ -217,7 +228,7 @@ export default function AdminPage() {
     const { name, value, type } = e.target
     const checked = (e.target as HTMLInputElement).checked
 
-    setFormData((prev: any) => ({
+    setFormData((prev: Record<string, string>) => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }))

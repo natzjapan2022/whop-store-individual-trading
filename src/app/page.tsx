@@ -66,7 +66,7 @@ export default function Home() {
                 <span className="text-primary"> Individual Trading</span>
               </h1>
               <p className="mt-6 text-xl text-gray-600 leading-relaxed">
-                Professional trading education, advanced tools, and personalized guidance to help individual traders succeed in today's competitive markets. Join thousands who've transformed their trading careers.
+                Professional trading education, advanced tools, and personalized guidance to help individual traders succeed in today&apos;s competitive markets. Join thousands who&apos;ve transformed their trading careers.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
                 <Link href="/pricing">
@@ -113,7 +113,7 @@ export default function Home() {
                     <span className="font-semibold">$127,543.89</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Today's P&L</span>
+                    <span className="text-sm text-gray-600">Today&apos;s P&L</span>
                     <span className="font-semibold text-green-600">+$2,847.12</span>
                   </div>
                   <div className="h-32 bg-gradient-to-r from-blue-100 to-blue-200 rounded-lg flex items-center justify-center">
@@ -335,7 +335,7 @@ export default function Home() {
               <CardHeader>
                 <CardTitle>Send us a message</CardTitle>
                 <CardDescription>
-                  Fill out the form below and we'll get back to you within 24 hours.
+                  Fill out the form below and we&apos;ll get back to you within 24 hours.
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -346,7 +346,7 @@ export default function Home() {
                     </div>
                     <h3 className="text-xl font-semibold text-green-700 mb-2">Message Sent Successfully!</h3>
                     <p className="text-gray-600 mb-4">
-                      Thank you for contacting Individual Trading. We've received your message and will get back to you within 24 hours.
+                      Thank you for contacting Individual Trading. We&apos;ve received your message and will get back to you within 24 hours.
                     </p>
                     <Button
                       onClick={() => setShowSuccess(false)}

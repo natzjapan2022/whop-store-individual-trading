@@ -107,7 +107,7 @@ export default function CheckoutPage() {
           </div>
 
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Complete Your Purchase</h1>
-          <p className="text-gray-600">You're about to join thousands of successful traders</p>
+          <p className="text-gray-600">You&apos;re about to join thousands of successful traders</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
@@ -127,7 +127,7 @@ export default function CheckoutPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                <h3 className="font-semibold text-gray-900 mb-3">What's included:</h3>
+                <h3 className="font-semibold text-gray-900 mb-3">What&apos;s included:</h3>
                 {currentPlan.features.map((feature, index) => (
                   <div key={index} className="flex items-center">
                     <div className="flex-shrink-0 w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mr-3">

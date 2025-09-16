@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -17,7 +16,6 @@ import {
 } from 'lucide-react'
 
 export default function PricingPage() {
-  const [showCheckout, setShowCheckout] = useState<string | null>(null)
 
   const handlePurchase = (plan: string) => {
     // Redirect to dedicated checkout page
@@ -92,7 +90,7 @@ export default function PricingPage() {
               </Button>
 
               <div className="space-y-4">
-                <h4 className="font-semibold text-gray-900">What's included:</h4>
+                <h4 className="font-semibold text-gray-900">What&apos;s included:</h4>
                 <ul className="space-y-3">
                   <li className="flex items-center">
                     <Check className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
@@ -254,8 +252,8 @@ export default function PricingPage() {
             </div>
             <h3 className="text-2xl font-bold text-gray-900 mb-4">30-Day Money Back Guarantee</h3>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              We're confident in our training program. If you're not completely satisfied within 30 days,
-              we'll refund your purchase - no questions asked.
+              We&apos;re confident in our training program. If you&apos;re not completely satisfied within 30 days,
+              we&apos;ll refund your purchase - no questions asked.
             </p>
           </div>
         </div>
