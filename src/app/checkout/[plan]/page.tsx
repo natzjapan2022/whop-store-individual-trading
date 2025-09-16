@@ -216,6 +216,21 @@ export default function CheckoutPage() {
             <span>⚡ Instant Access</span>
           </div>
         </div>
+
+        {/* Direct Whop purchase link */}
+        <div className="mt-6 text-center">
+          <p className="text-sm text-gray-500 mb-2">
+            Or you can purchase directly on Whop:
+          </p>
+          <Link
+            href="https://whop.com/individual-a99a/individual-trading-access-pass/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:text-blue-800 underline text-sm"
+          >
+            Purchase on Whop →
+          </Link>
+        </div>
       </div>
     </div>
   )
