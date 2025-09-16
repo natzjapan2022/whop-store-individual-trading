@@ -148,7 +148,7 @@ export default function AdminPage() {
     setShowUserModal(true)
   }
 
-  const handleDeleteUser = (userId: number) => {
+  const handleDeleteUser = (userId: string) => {
     if (confirm('Are you sure you want to delete this user?')) {
       const updatedUsers = users.filter(user => user.id !== userId)
       saveUsers(updatedUsers)
