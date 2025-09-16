@@ -1,18 +1,16 @@
 "use client"
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
 import { ArrowLeft, Crown, Zap } from 'lucide-react'
 import Image from 'next/image'
+import { WhopCheckoutEmbed } from '@whop/checkout/react'
 
 export default function CheckoutPage() {
   const params = useParams()
   const router = useRouter()
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState('')
 
   const plan = params.plan as string
 
@@ -52,33 +50,6 @@ export default function CheckoutPage() {
     if (!currentPlan) {
       router.push('/pricing')
       return
-    }
-
-    // Load Whop checkout embed using correct implementation
-    const loadWhopCheckout = () => {
-      const script = document.createElement('script')
-      script.src = 'https://js.whop.com/static/checkout/loader.js'
-      script.async = true
-      script.defer = true
-      script.onload = () => {
-        setIsLoading(false)
-        console.log('Whop checkout script loaded successfully')
-      }
-      script.onerror = () => {
-        setError('Failed to load checkout. Please try again.')
-        setIsLoading(false)
-      }
-      document.head.appendChild(script)
-    }
-
-    loadWhopCheckout()
-
-    // Cleanup
-    return () => {
-      const script = document.querySelector('script[src="https://js.whop.com/static/checkout/loader.js"]')
-      if (script) {
-        document.head.removeChild(script)
-      }
     }
   }, [currentPlan, router])
 
@@ -174,32 +145,7 @@ export default function CheckoutPage() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {isLoading && (
-                <div className="flex items-center justify-center h-64">
-                  <div className="text-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-                    <p className="text-gray-600">Loading secure checkout...</p>
-                  </div>
-                </div>
-              )}
-
-              {error && (
-                <div className="text-center h-64 flex items-center justify-center">
-                  <div>
-                    <p className="text-red-600 mb-4">{error}</p>
-                    <Button onClick={() => window.location.reload()} variant="outline">
-                      Try Again
-                    </Button>
-                  </div>
-                </div>
-              )}
-
-              {/* Whop checkout will be embedded here */}
-              <div
-                data-whop-checkout-plan-id={currentPlan.productId}
-                data-whop-checkout-theme="light"
-                className="min-h-[400px]"
-              ></div>
+              <WhopCheckoutEmbed planId={currentPlan.productId} />
             </CardContent>
           </Card>
         </div>
