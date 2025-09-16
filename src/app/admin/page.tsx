@@ -48,7 +48,7 @@ export default function AdminPage() {
   const [showUserModal, setShowUserModal] = useState(false)
   const [showColumnModal, setShowColumnModal] = useState(false)
   const [editingUser, setEditingUser] = useState<User | null>(null)
-  const [formData, setFormData] = useState<Record<string, string>>({})
+  const [formData, setFormData] = useState<Record<string, string | number | boolean>>({})
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
@@ -134,7 +134,7 @@ export default function AdminPage() {
   // Handle add/edit user
   const handleAddUser = () => {
     setEditingUser(null)
-    const emptyFormData: Record<string, string> = { id: Date.now().toString() }
+    const emptyFormData: Record<string, string | number | boolean> = { id: Date.now().toString() }
     columns.forEach(col => {
       emptyFormData[col.key] = ''
     })
@@ -217,6 +217,7 @@ export default function AdminPage() {
 
       // Remove column data from all users
       const updatedUsers = users.map(user => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { [columnKey]: _removed, ...rest } = user
         return rest
       })
@@ -228,7 +229,7 @@ export default function AdminPage() {
     const { name, value, type } = e.target
     const checked = (e.target as HTMLInputElement).checked
 
-    setFormData((prev: Record<string, string>) => ({
+    setFormData((prev: Record<string, string | number | boolean>) => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }))
